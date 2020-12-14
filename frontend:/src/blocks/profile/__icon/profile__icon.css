@@ -1,0 +1,19 @@
+.profile__icon {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  top:0;
+  left: 0;
+  background-image: url('../../../images/profile-image-button.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 26px;
+  background-color: rgba(0, 0, 0, 0.8);
+  opacity: 0;
+  transition: 0.3s 0s opacity ease-in; 
+}
+
+.profile__icon:hover {
+  opacity: 1;
+}

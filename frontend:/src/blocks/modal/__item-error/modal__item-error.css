@@ -1,0 +1,8 @@
+.modal__item-error {
+  display: inline-block;
+  opacity: 0;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 15px;
+  color: #FF0000;
+}

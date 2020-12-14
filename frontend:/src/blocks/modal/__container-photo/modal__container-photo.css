@@ -1,0 +1,11 @@
+.modal__container-photo {
+  box-sizing: border-box;
+  position: relative;
+  margin: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .modal__container-photo {
+    margin: 40px;
+  }
+}

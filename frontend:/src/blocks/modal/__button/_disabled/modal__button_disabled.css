@@ -1,0 +1,10 @@
+.modal__button_disabled {
+  cursor: default;
+  color: #C4C4C4;
+  background-color: #FFF;
+  border: 1px solid #C4C4C4;
+}
+
+.modal__button_disabled:hover {
+  opacity: 1;
+}

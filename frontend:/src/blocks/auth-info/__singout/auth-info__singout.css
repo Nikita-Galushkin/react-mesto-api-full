@@ -1,0 +1,21 @@
+.auth-info__signout {
+  font-style: normal;
+  font-weight: 400;
+  color: #fff;
+  font-size: 18px;
+  line-height: 22px;
+  cursor: pointer;
+  transition: opacity 0.7s ease;
+  background-color: #000;
+  border: none;
+  margin-left: 24px;
+  padding: 0;
+}
+
+.auth-info__signout:hover {
+  opacity: .6;
+}
+
+.auth-info__signout:focus {
+  outline: none;
+}

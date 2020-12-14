@@ -1,0 +1,18 @@
+@import url('./__image/element__image.css');
+@import url('./__info-container/element__info-container.css');
+@import url('./__title/element__title.css');
+@import url('./__like-container/element__like-container.css');
+@import url('./__group/element__group.css');
+@import url('./__group/_active/element__group_active.css');
+@import url('./__counter/element__counter.css');
+@import url('./__trash/element__trash.css');
+@import url('./__trash/_active/element__trash_active.css');
+@import url('./__photo/element__photo.css');
+
+.element {
+  background: #fff;
+  border-radius: 10px;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}

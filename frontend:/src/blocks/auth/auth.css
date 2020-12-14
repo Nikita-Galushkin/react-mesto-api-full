@@ -1,0 +1,20 @@
+@import url('./__container/auth__container.css');
+@import url('./__title/auth__title.css');
+@import url('./__form/auth__form.css');
+@import url('./__item/auth__item.css');
+@import url('./__item-error/auth__item-error.css');
+@import url('./__item-error/_active/auth__item-error_active.css');
+@import url('./__button/auth__button.css');
+@import url('./__text/auth__text.css');
+@import url('./__text/_active/auth__text_active.css');
+@import url('./__link/auth__link.css');
+
+.auth {
+  font-family: 'Inter', Arial, sans-serif;
+  display: flex;
+  background-color: rgba(0, 0, 0, .5);
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+}

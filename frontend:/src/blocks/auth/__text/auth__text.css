@@ -1,0 +1,10 @@
+.auth__text {
+  display: none;
+  font-style: normal;
+  font-weight: 400;
+  color: #fff;
+  font-size: 14px;
+  text-align: center;
+  line-height: 17px;
+  margin: 15px 0 0;
+}

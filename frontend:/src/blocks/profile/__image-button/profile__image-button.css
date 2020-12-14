@@ -1,0 +1,22 @@
+.profile__image-button {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  min-width: 120px;
+  border: 0;
+  border-radius: 50%;
+  box-sizing: border-box;
+  background: #000;
+  cursor: pointer;
+  padding: 0;
+}
+
+.profile__image-button:focus {
+  outline: none;
+}
+
+@media screen and (max-width: 720px) {
+  .profile__image-button {
+    align-self: center;
+  }
+}
