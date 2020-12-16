@@ -28,7 +28,7 @@ app.use(requestLogger);
 
 app.get('/crash-test', () => {
   setTimeout(() => {
-    throw new Error('Сервер сейчас упадёт');
+    throw new Error({ message:'Сервер сейчас упадёт' });
   }, 0);
 }); 
 
@@ -38,7 +38,7 @@ app.post('/signup', validateUser, createUser);
 app.use('/', auth, usersRouter);
 app.use('/', auth, cardsRouter);
 app.use('*', () => {
-  throw new NotFoundError('Запрашиваемый ресурс не найден');
+  throw new NotFoundError({ message:'Запрашиваемый ресурс не найден' });
 });
 
 app.use(errorLogger);

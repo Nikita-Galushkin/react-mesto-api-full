@@ -3,7 +3,7 @@ const validator = require('validator');
 
 const urlValidation = (value) => {
   if (!validator.isURL(value)) {
-    throw new CelebrateError('Некорректный адрес');
+    throw new CelebrateError({ message: 'Некорректный адрес' });
   }
   return value;
 };

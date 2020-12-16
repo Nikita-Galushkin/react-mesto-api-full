@@ -17,25 +17,26 @@ module.exports.createCard = (req, res) => {
       res.send({ data: card });
     })
     .catch(() => {
-      throw new BadRequestError('Переданы некорректные данные');
+      throw new BadRequestError({ message: 'Переданы некорректные данные' });
     });
 };
 
 module.exports.deleteCard = (req, res, next) => {
-  Card.findById(req.params._id)
+  const cardId = mongoose.Types.ObjectId(req.params._id);
+  Card.findById(cardId)
     .then((card) => {
-      if (card.owner.toString() !== req.user._id) {
-        throw new ForbiddenError('Недостаточно прав для выполнения операции');
+      res.send(card);
+      if (card.owner.toString() !== req.user._id.toString()) {
+        throw new ForbiddenError({ message: 'Недостаточно прав для выполнения операции' });
       }
-      const { cardId } = req.params;
-      Card.findByIdAndRemove({ _id: cardId })
+      Card.findByIdAndRemove(cardId)
         .then((card) => {
           res.send({ data: card });
       })
       .catch(next);
     })
     .catch(() => {
-      throw new NotFoundError('Нет карточки с таким id');
+      throw new NotFoundError({ message: 'Нет карточки с таким id' });
     });
 };
 
@@ -47,13 +48,13 @@ module.exports.likeCard = (req, res, next) => {
       { new: true, runValidators: true })
       .then((likes) => {
         if (!likes) {
-          throw new NotFoundError('Нет карточки с таким id');
+          throw new NotFoundError({ message: 'Нет карточки с таким id' });
         }
         return res.send(likes);
       })
       .catch(next);
   } else {
-    throw new BadRequestError('Переданы некорректные данные');
+    throw new BadRequestError({ message: 'Переданы некорректные данные' });
   }
 };
 
@@ -65,12 +66,12 @@ module.exports.dislikeCard = (req, res, next) => {
       { new: true, runValidators: true })
       .then((likes) => {
         if (!likes) {
-          throw new NotFoundError('Нет карточки с таким id');
+          throw new NotFoundError({ message: 'Нет карточки с таким id' });
         }
         return res.send(likes);
       })
       .catch(next);
   } else {
-    throw new BadRequestError('Переданы некорректные данные');
+    throw new BadRequestError({ message: 'Переданы некорректные данные' });
   }
 };
