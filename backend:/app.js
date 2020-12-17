@@ -18,8 +18,9 @@ app.use(cookieParser());
 
 mongoose.connect('mongodb://localhost:27017/mestodb', {
   useNewUrlParser: true,
-  useCreateIndex: true,
   useFindAndModify: false,
+  useCreateIndex: true,
+  useUnifiedTopology: true,
 });
 
 app.use(bodyParser.json());

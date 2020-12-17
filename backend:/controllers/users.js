@@ -32,8 +32,8 @@ module.exports.getUser = (req, res, next) => {
 };
 
 module.exports.getUserMe = (req, res, next) => {
-  const userId = mongoose.Types.ObjectId(req.params._id);
-  User.findById(userId)
+  console.log(req);
+  User.find()
     .then((data) => res.send(data))
     .catch(next);
 };
