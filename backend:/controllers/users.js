@@ -9,6 +9,13 @@ const UnauthorizedError = require('../errors/UnauthorizedError');
 
 const { NODE_ENV, JWT_SECRET } = process.env;
 
+module.exports.getUserMe = (req, res, next) => {
+  const userId = mongoose.Types.ObjectId(req.params._id);
+  User.findById(userId)
+    .then((data) => res.send(data))
+    .catch(next);
+};
+
 module.exports.getUsers = (req, res, next) => {
   User.find()
     .then((data) => res.send(data))
