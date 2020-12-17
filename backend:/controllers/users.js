@@ -32,9 +32,13 @@ module.exports.getUser = (req, res, next) => {
 };
 
 module.exports.getUserMe = (req, res, next) => {
-  console.log(req);
-  User.find()
-    .then((data) => res.send(data))
+  User.findById(req.user._id)
+    .then((user) => {
+      if (!user) {
+        throw new NotFoundError({ message: 'Нет пользователя с таким id' });
+      }
+      return res.send(user);
+    })
     .catch(next);
 };
 
