@@ -1,5 +1,5 @@
-178.154.235.84
 http://web.gavrik.students.nomoreparties.xyz
+http://api.web.gavrik.students.nomoreparties.xyz
 
 # Проект Mesto фронтенд + бэкенд
 
