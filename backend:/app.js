@@ -1,6 +1,6 @@
 require('dotenv').config(); 
 const express = require('express');
-const cookieParser = require('cookie-parser');
+// const cookieParser = require('cookie-parser');
 const { PORT = 3000 } = process.env;
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
@@ -16,7 +16,7 @@ const { validateUser, validateLogin } = require('./middlewares/requestValidation
 const NotFoundError = require('./errors/NotFoundError.js');
 
 app.use(cors({ origin: true }));
-app.use(cookieParser());
+// app.use(cookieParser());
 
 mongoose.connect('mongodb://localhost:27017/mestodb', {
   useNewUrlParser: true,
