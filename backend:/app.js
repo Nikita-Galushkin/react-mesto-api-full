@@ -14,8 +14,15 @@ const { errors } = require('celebrate');
 const { requestLogger, errorLogger } = require('./middlewares/logger'); 
 const { validateUser, validateLogin } = require('./middlewares/requestValidation');
 const NotFoundError = require('./errors/NotFoundError.js');
+const hosts = [
+  'http://localhost:3000',
+  'https://web.gavrik.students.nomoreparties.xyz',
+  'http://web.gavrik.students.nomoreparties.xyz',
+  'https://api.web.gavrik.students.nomoreparties.xyz',
+  'http://api.web.gavrik.students.nomoreparties.xyz'
+];
 
-app.use(cors({ origin: true }));
+app.use(cors({ origin: hosts }));
 // app.use(cookieParser());
 
 mongoose.connect('mongodb://localhost:27017/mestodb', {
