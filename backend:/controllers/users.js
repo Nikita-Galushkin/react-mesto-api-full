@@ -16,8 +16,8 @@ module.exports.getUsers = (req, res, next) => {
 };
 
 module.exports.getUser = (req, res, next) => {
-  if (mongoose.Types.ObjectId.isValid(req.params._id)) {
-    const userId = mongoose.Types.ObjectId(req.params._id);
+  if (mongoose.Types.ObjectId.isValid(req.user._id)) {
+    const userId = mongoose.Types.ObjectId(req.user._id);
     User.findById(userId)
       .then((user) => {
         if (!user) {
@@ -32,8 +32,7 @@ module.exports.getUser = (req, res, next) => {
 };
 
 module.exports.getUserMe = (req, res, next) => {
-  console.log(req.user);
-  User.findById(req.user._id)
+  User.findById(req.params._id)
     .then((user) => {
       if (!user) {
         throw new NotFoundError({ message: 'Нет пользователя с таким id' });
