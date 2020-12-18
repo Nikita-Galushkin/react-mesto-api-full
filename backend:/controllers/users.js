@@ -11,7 +11,7 @@ const { NODE_ENV, JWT_SECRET } = process.env;
 
 module.exports.getUsers = (req, res, next) => {
   User.find()
-    .then((data) => res.send({data}))
+    .then((data) => res.send(data))
     .catch(next);
 };
 
@@ -23,7 +23,7 @@ module.exports.getUser = (req, res, next) => {
         if (!user) {
           throw new NotFoundError({ message: 'Нет пользователя с таким id' });
         }
-        return res.send({user});
+        return res.send(user);
       })
       .catch(next);
   } else {
@@ -37,7 +37,7 @@ module.exports.getUserMe = (req, res, next) => {
       if (!user) {
         throw new NotFoundError({ message: 'Нет пользователя с таким id' });
       }
-      return res.send({user});
+      return res.send(user);
     })
     .catch(next);
 };
@@ -72,7 +72,7 @@ module.exports.updateUser = (req, res, next) => {
   User.findByIdAndUpdate(req.user._id, { name, about }, { new: true, runValidators: true })
     .then((user) => {
       if (user) {
-        res.send({ user });
+        res.send({ data: user });
       }
       throw new NotFoundError({ message: 'Нет пользователя с таким id' });
     })
@@ -84,7 +84,7 @@ module.exports.updateAvatar = (req, res, next) => {
   User.findByIdAndUpdate(req.user._id, { avatar }, { new: true, runValidators: true })
     .then((user) => {
       if (user) {
-        res.send({ user });
+        res.send({ data: user });
       }
       throw new NotFoundError({ message: 'Нет пользователя с таким id' });
     })
@@ -100,14 +100,14 @@ module.exports.login = (req, res, next) => {
         NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
         { expiresIn: '7d' },
       );
-      res.send({ token });
-      // res
-      //   .cookie('jwt', token, {
-      //     maxAge: 3600000 * 24 * 7,
-      //     httpOnly: true,
-      //     sameSite: true,
-      //   })
-      //   .send({ message: 'Успешная авторизация' });
+      // res.status(200).send({ token });
+      res
+        .cookie('jwt', token, {
+          maxAge: 3600000 * 24 * 7,
+          httpOnly: true,
+          sameSite: true,
+        })
+        .send({ message: 'Успешная авторизация' });
     })
     .catch(next);
 };
