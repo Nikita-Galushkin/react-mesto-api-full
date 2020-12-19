@@ -21,26 +21,7 @@ module.exports.createCard = (req, res) => {
     });
 };
 
-// module.exports.deleteCard = (req, res, next) => {
-//   const cardId = mongoose.Types.ObjectId(req.params._id);
-//   Card.findById(cardId)
-//     .then((card) => {
-//       res.send(card);
-//       if (card.owner.toString() !== req.user._id.toString()) {
-//         throw new ForbiddenError({ message: 'Недостаточно прав для выполнения операции' });
-//       }
-//       Card.findByIdAndRemove(cardId)
-//         .then((card) => {
-//           res.send({ data: card });
-//       })
-//       .catch(next);
-//     })
-//     .catch(() => {
-//       throw new NotFoundError({ message: 'Нет карточки с таким id' });
-//     });
-// };
 module.exports.deleteCard = (req, res, next) => {
-  // const cardId = mongoose.Types.ObjectId(req.params._id);
   Card.findById(req.params._id)
     .then((card) => {
       if (!card) {
@@ -49,8 +30,6 @@ module.exports.deleteCard = (req, res, next) => {
       if (card.owner.toString() !== req.user._id) {
         throw new ForbiddenError({ message: 'Недостаточно прав для выполнения операции' });
       }
-
-
       return Card.findByIdAndRemove(req.params._id)
       .then((response) => {
         if (response.deletedCount !== 0) {
@@ -60,26 +39,6 @@ module.exports.deleteCard = (req, res, next) => {
   })
   .catch(next);
 };
-
-// const deleteCard = (req, res, next) => {
-//   Card.findById(req.params.cardId)
-//     .then((card) => {
-//       if (!card) {
-//         throw new NotFoundError('Карточка не найдена');
-//       }
-//       if (card.owner.toString() !== req.user._id) {
-//         throw new ForbiddenError('Нельзя удалить чужую карточку');
-//       }
-//       return Card.findByIdAndRemove(req.params.cardId)
-//         // eslint-disable-next-line consistent-return
-//         .then((response) => {
-//           if (response.deletedCount !== 0) {
-//             return res.status(200).send({ message: 'Карточка удалена' });
-//           }
-//         });
-//     })
-//     .catch(next);
-// };
 
 module.exports.likeCard = (req, res, next) => {
   if (mongoose.Types.ObjectId.isValid(req.params._id)) {
