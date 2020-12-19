@@ -41,7 +41,7 @@ module.exports.createCard = (req, res) => {
 // };
 module.exports.deleteCard = (req, res, next) => {
   // const cardId = mongoose.Types.ObjectId(req.params._id);
-  Card.findById(req.params.cardId)
+  Card.findById(req.params._id)
     .then((card) => {
       if (!card) {
         throw new NotFoundError({ message: 'Нет карточки с таким id' });
@@ -51,7 +51,7 @@ module.exports.deleteCard = (req, res, next) => {
       }
 
 
-      return Card.findByIdAndRemove(req.params.cardId)
+      return Card.findByIdAndRemove(req.params._id)
       .then((response) => {
         if (response.deletedCount !== 0) {
           return res.status(200).send({ message: 'Карточка удалена' });
