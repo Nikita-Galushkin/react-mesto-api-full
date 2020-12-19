@@ -16,7 +16,8 @@ module.exports.getUsers = (req, res, next) => {
 };
 
 module.exports.getUserMe = (req, res, next) => {
-  User.findById(req.user._id)
+  const userId = mongoose.Types.ObjectId(req.user._id);
+  User.findById(userId)
     .then((user) => {
       if (!user) {
         throw new NotFoundError({ message: 'Нет пользователя с таким id' });
@@ -76,9 +77,9 @@ module.exports.updateAvatar = (req, res, next) => {
 };
 
 module.exports.getUser = (req, res, next) => {
-  if (mongoose.Types.ObjectId.isValid(req.params._id)) {
-    const userId = mongoose.Types.ObjectId(req.params._id);
-    User.findById(userId)
+  const { id } = req.params;
+  if (mongoose.Types.ObjectId.isValid(id)) {
+    User.findById(id)
       .then((user) => {
         if (!user) {
           throw new NotFoundError({ message: 'Нет пользователя с таким id' });
