@@ -15,24 +15,8 @@ module.exports.getUsers = (req, res, next) => {
     .catch(next);
 };
 
-module.exports.getUser = (req, res, next) => {
-  if (mongoose.Types.ObjectId.isValid(req.user._id)) {
-    const userId = mongoose.Types.ObjectId(req.user._id);
-    User.findById(userId)
-      .then((user) => {
-        if (!user) {
-          throw new NotFoundError({ message: 'Нет пользователя с таким id' });
-        }
-        return res.send(user);
-      })
-      .catch(next);
-  } else {
-    throw new BadRequestError({ message: 'Переданы некорректные данные' });
-  }
-};
-
 module.exports.getUserMe = (req, res, next) => {
-  User.findById(req.params._id)
+  User.findById(req.user._id)
     .then((user) => {
       if (!user) {
         throw new NotFoundError({ message: 'Нет пользователя с таким id' });
@@ -89,6 +73,22 @@ module.exports.updateAvatar = (req, res, next) => {
       throw new NotFoundError({ message: 'Нет пользователя с таким id' });
     })
     .catch(next);
+};
+
+module.exports.getUser = (req, res, next) => {
+  if (mongoose.Types.ObjectId.isValid(req.params._id)) {
+    const userId = mongoose.Types.ObjectId(req.params._id);
+    User.findById(userId)
+      .then((user) => {
+        if (!user) {
+          throw new NotFoundError({ message: 'Нет пользователя с таким id' });
+        }
+        return res.send(user);
+      })
+      .catch(next);
+  } else {
+    throw new BadRequestError({ message: 'Переданы некорректные данные' });
+  }
 };
 
 module.exports.login = (req, res, next) => {
