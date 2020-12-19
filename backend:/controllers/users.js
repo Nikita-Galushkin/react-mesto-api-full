@@ -77,9 +77,9 @@ module.exports.updateAvatar = (req, res, next) => {
 };
 
 module.exports.getUser = (req, res, next) => {
-  const { id } = req.params;
-  if (mongoose.Types.ObjectId.isValid(id)) {
-    User.findById(id)
+  const { _id } = req.params;
+  if (mongoose.Types.ObjectId.isValid(_id)) {
+    User.findById(_id)
       .then((user) => {
         if (!user) {
           throw new NotFoundError({ message: 'Нет пользователя с таким id' });
