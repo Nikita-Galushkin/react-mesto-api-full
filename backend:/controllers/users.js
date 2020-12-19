@@ -69,7 +69,7 @@ module.exports.updateAvatar = (req, res, next) => {
   User.findByIdAndUpdate(req.user._id, { avatar }, { new: true, runValidators: true })
     .then((user) => {
       if (user) {
-        res.send({ data: user });
+        res.send({ user });
       }
       throw new NotFoundError({ message: 'Нет пользователя с таким id' });
     })
