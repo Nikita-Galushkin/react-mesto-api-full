@@ -42,7 +42,7 @@ app.get('/crash-test', () => {
   }, 0);
 }); 
 
-app.post('/signin', validateLogin, login);
+app.post('/signin', login);
 app.post('/signup', validateUser, createUser);
 
 app.use('/', auth, usersRouter);
