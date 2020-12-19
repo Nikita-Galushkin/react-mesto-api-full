@@ -94,14 +94,33 @@ module.exports.getUser = (req, res, next) => {
 
 module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
-  return User.findUserByCredentials(email, password)
-    .then((user) => {
-      const token = jwt.sign(
-        { _id: user._id },
-        NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
-        { expiresIn: '7d' },
-      );
-      res.status(200).send({ token });
+  if (!password || !email) {
+    throw new UnauthorizedError({ message: 'Неправильные email или пароль' });
+  }
+  return User.findOne({ email }).select('+password')
+    .then((user) => bcrypt.compare(password, user.password)
+      .then((matched) => {
+        if (!matched) {
+          throw new UnauthorizedError({ message: 'Неправильные email или пароль' });
+        }
+        const token = jwt.sign(
+          { _id: user._id },
+          NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
+          { expiresIn: '7d' },
+        );
+        return res.status(200).send({ token });
+      }))
+    .catch(next);
+};
+  // return User.findUserByCredentials(email, password)
+    // .then((user) => {
+
+      // const token = jwt.sign(
+      //   { _id: user._id },
+      //   NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
+      //   { expiresIn: '7d' },
+      // );
+      // res.status(200).send({ token });
       // res
       //   .cookie('jwt', token, {
       //     maxAge: 3600000 * 24 * 7,
@@ -109,6 +128,46 @@ module.exports.login = (req, res, next) => {
       //     sameSite: true,
       //   })
       //   .send({ message: 'Успешная авторизация' });
-    })
-    .catch(next);
-};
+//     })
+//     .catch(next);
+// };
+
+// const login = (req, res, next) => {
+//   const {
+//     password, email,
+//   } = req.body;
+//   if (!password || !email) {
+//     throw new UnauthorizedError({ message: 'Неправильные email или пароль' });
+//   }
+//   return User.findOne({ email }).select('+password')
+//     .then((user) => bcrypt.compare(password, user.password)
+//       .then((matched) => {
+//         if (!matched) {
+//           throw new UnauthorizedError({ message: 'Неправильные email или пароль' });
+//         }
+//         const token = jwt.sign(
+//           { _id: user._id },
+//           NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
+//           { expiresIn: '7d' },
+//         );
+//         return res.status(200).send({ token });
+//       }))
+//     .catch(next);
+// };
+
+
+// userSchema.statics.findUserByCredentials = function (email, password) {
+//   return this.findOne({ email }).select('+password')
+//     .then((user) => {
+//       if (!user) {
+//         throw new UnauthorizedError('Неправильные email или пароль');
+//       }
+//       return bcrypt.compare(password, user.password)
+//         .then((matched) => {
+//           if (!matched) {
+//             throw new UnauthorizedError('Неправильные email или пароль');
+//           }
+//           return user;
+//         });
+//     });
+// };
