@@ -31,6 +31,7 @@ module.exports.deleteCard = (req, res, next) => {
         throw new ForbiddenError({ message: 'Недостаточно прав для выполнения операции' });
       }
       return Card.findByIdAndRemove(req.params._id)
+      // eslint-disable-next-line consistent-return
         .then((response) => {
           if (response.deletedCount !== 0) {
             return res.status(200).send({ message: 'Карточка удалена' });
