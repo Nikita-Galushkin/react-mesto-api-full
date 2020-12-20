@@ -103,25 +103,30 @@ module.exports.login = (req, res, next) => {
   if (!password || !email) {
     throw new UnauthorizedError({ message: 'Неправильные email или пароль' });
   }
-  return User.findOne({ email }).select('+password')
-    .then((user) => bcrypt.compare(password, user.password)
-      .then((matched) => {
-        if (!matched) {
-          throw new UnauthorizedError({ message: 'Неправильные email или пароль' });
-        }
-        const token = jwt.sign(
-          { _id: user._id },
-          NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
-          { expiresIn: '7d' },
-        );
-        return res.status(200).send({ token });
-        // res
-      //   .cookie('jwt', token, {
-      //     maxAge: 3600000 * 24 * 7,
-      //     httpOnly: true,
-      //     sameSite: true,
-      //   })
-      //   .send({ message: 'Успешная авторизация' });
-      }))
+  User.findOne({ email }).select('+password')
+    .then((user) => {
+      if (!user) {
+        throw new UnauthorizedError({ message: 'Неправильные email или пароль' });
+      }
+      return bcrypt.compare(password, user.password)
+        .then((matched) => {
+          if (!matched) {
+            throw new UnauthorizedError({ message: 'Неправильные email или пароль' });
+          }
+          const token = jwt.sign(
+            { _id: user._id },
+            NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
+            { expiresIn: '7d' },
+          );
+          return res.status(200).send({ token });
+          // res
+        //   .cookie('jwt', token, {
+        //     maxAge: 3600000 * 24 * 7,
+        //     httpOnly: true,
+        //     sameSite: true,
+        //   })
+        //   .send({ message: 'Успешная авторизация' });
+        });
+    })
     .catch(next);
 };
