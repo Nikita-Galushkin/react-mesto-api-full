@@ -19,7 +19,6 @@ const userSchema = new mongoose.Schema({
     validate: {
       validator(link) {
         return validator.isURL(link);
-        // return /^https?:\/\/(((w{3}\.)?(\w+\.)+[a-zA-Z]{2,6})|((\d{1,3}\.){3}\d{1,3}))(:\d{2,5})?(\/[\w+-.?=]+)*#?$/.test(v);
       },
       message: 'Неправильная ссылка на аватар профиля',
     },

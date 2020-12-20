@@ -28,28 +28,34 @@ module.exports.getUserMe = (req, res, next) => {
 };
 
 module.exports.createUser = (req, res, next) => {
-  const { name, about, avatar, email, password } = req.body;
+  const {
+    name, about, avatar, email, password,
+  } = req.body;
   if (!email || !password) {
     throw new UnauthorizedError({ message: 'Переданы некорректные данные' });
   }
-    User.findOne({ email })
-      .then((user) => {
-        if (user){
-          throw new ConflictError({ message: 'Пользователь уже существует' });
-        }
-        bcrypt.hash(password, 10)
-          .then((hash) => {
-            return User.create({ name, about, avatar, email, password: hash })
-              .then((user) => {
-                res.send({
-                  name: user.name, about: user.about, avatar: user.avatar, _id: user._id, email: user.email,
-                });
-              })
-              .catch(next);
+  User.findOne({ email })
+    .then((user) => {
+      if (user) {
+        throw new ConflictError({ message: 'Пользователь уже существует' });
+      }
+      bcrypt.hash(password, 10)
+        .then((hash) => User.create({
+          name, about, avatar, email, password: hash,
+        })
+          .then((data) => {
+            res.send({
+              name: data.name,
+              about: data.about,
+              avatar: data.avatar,
+              _id: data._id,
+              email: data.email,
+            });
           })
-          .catch(next);
-      })
-      .catch(next);
+          .catch(next))
+        .catch(next);
+    })
+    .catch(next);
 };
 
 module.exports.updateUser = (req, res, next) => {

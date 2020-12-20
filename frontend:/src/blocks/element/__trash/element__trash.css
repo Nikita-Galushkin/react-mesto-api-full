@@ -1,0 +1,26 @@
+.element__trash {
+  box-sizing: border-box;
+  border: 0;
+  width: 18px;
+  height: 19px;
+  background-image: url('../../../images/element-trash.svg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  cursor: pointer;
+  position: absolute;
+  top: 18px;
+  right: 15px;
+  padding: 0;
+  transition: 0.3s 0s opacity ease-in;
+  display: none;
+}
+
+.element__trash:focus {
+  outline: none;
+}
+
+.element__trash:hover {
+  opacity: .6;
+}

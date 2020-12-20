@@ -1,0 +1,9 @@
+@import url('./__singout/auth-info__singout.css');
+
+.auth-info {
+  font-style: normal;
+  font-weight: 500;
+  color: #fff;
+  font-size: 18px;
+  line-height: 22px;
+}

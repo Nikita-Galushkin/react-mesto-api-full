@@ -1,4 +1,4 @@
-require('dotenv').config(); 
+require('dotenv').config();
 const express = require('express');
 // const cookieParser = require('cookie-parser');
 const { PORT = 3000 } = process.env;
@@ -6,12 +6,12 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const app = express();
+const { errors } = require('celebrate');
 const cardsRouter = require('./routes/cards');
 const usersRouter = require('./routes/users');
 const auth = require('./middlewares/auth');
 const { login, createUser } = require('./controllers/users');
-const { errors } = require('celebrate');
-const { requestLogger, errorLogger } = require('./middlewares/logger'); 
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { validateUser, validateLogin } = require('./middlewares/requestValidation');
 const NotFoundError = require('./errors/NotFoundError.js');
 const hosts = [
@@ -19,7 +19,7 @@ const hosts = [
   'https://web.gavrik.students.nomoreparties.xyz',
   'http://web.gavrik.students.nomoreparties.xyz',
   'https://api.web.gavrik.students.nomoreparties.xyz',
-  'http://api.web.gavrik.students.nomoreparties.xyz'
+  'http://api.web.gavrik.students.nomoreparties.xyz',
 ];
 
 app.use(cors({ origin: hosts }));
@@ -38,17 +38,17 @@ app.use(requestLogger);
 
 app.get('/crash-test', () => {
   setTimeout(() => {
-    throw new Error({ message:'Сервер сейчас упадёт' });
+    throw new Error({ message: 'Сервер сейчас упадёт' });
   }, 0);
-}); 
+});
 
-app.post('/signin', login);
+app.post('/signin', validateLogin, login);
 app.post('/signup', validateUser, createUser);
 
 app.use('/', auth, usersRouter);
 app.use('/', auth, cardsRouter);
 app.use('*', () => {
-  throw new NotFoundError({ message:'Запрашиваемый ресурс не найден' });
+  throw new NotFoundError({ message: 'Запрашиваемый ресурс не найден' });
 });
 
 app.use(errorLogger);

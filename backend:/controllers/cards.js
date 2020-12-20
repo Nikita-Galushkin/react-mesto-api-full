@@ -31,13 +31,13 @@ module.exports.deleteCard = (req, res, next) => {
         throw new ForbiddenError({ message: 'Недостаточно прав для выполнения операции' });
       }
       return Card.findByIdAndRemove(req.params._id)
-      .then((response) => {
-        if (response.deletedCount !== 0) {
-          return res.status(200).send({ message: 'Карточка удалена' });
-        }
-      });
-  })
-  .catch(next);
+        .then((response) => {
+          if (response.deletedCount !== 0) {
+            return res.status(200).send({ message: 'Карточка удалена' });
+          }
+        });
+    })
+    .catch(next);
 };
 
 module.exports.likeCard = (req, res, next) => {

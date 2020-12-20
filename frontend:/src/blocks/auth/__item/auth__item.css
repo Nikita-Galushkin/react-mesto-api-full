@@ -1,0 +1,22 @@
+.auth__item {
+  padding: 0 0 12px;
+  border: 0;
+  width: 100%;
+  box-sizing: border-box;
+  border-bottom: 2px solid rgba(204, 204, 204, .2);
+  background-color: transparent;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  color: #ccc;
+  font-family: inherit;
+}
+
+.auth__item:focus {
+  outline: none;
+}
+
+.auth__item:nth-child(1) {
+  margin-top: 30px;
+}

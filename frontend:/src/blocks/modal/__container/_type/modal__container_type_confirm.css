@@ -1,0 +1,7 @@
+.modal__container_type_confirm {
+  width: 100%;
+  height: 181px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
